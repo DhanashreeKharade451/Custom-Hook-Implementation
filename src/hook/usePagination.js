@@ -26,6 +26,10 @@ function usePagination( {
     setPage(currentPage + 1);
   }, [currentPage, setPage]);
 
+   const prevPage = useCallback(() => {
+    setPage(currentPage - 1);
+  }, [currentPage, setPage]);
+
  const startIndex = useMemo(() => {
     return (currentPage - 1) * itemsPerPage;
   }, [currentPage, itemsPerPage]);

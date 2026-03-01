@@ -1,31 +1,29 @@
 import React from "react";
 import usePagination from "../hook/usePagination";
 
-export function PaginationDemo({
-  totalItems,
- itemsPerPage = 10,
- initialPage =1,
-    }) {
+const  totalItems = 123
 
-      const totalPages = useMemo (() => {
-        return Math.max(1,Math.ceil(totalItems/itemsPerPage));
-      },[totalItems, itemsPerPage]);
+ function PaginationDemo() {
 
-     const [currentPage, setCurrentPage] = useState(
-    Math.min(Math.max(initialPage, 1), totalPages)
-  );
- 
-const setPage = useCallback(
-    (page) => {
-      const safePage = Math.min(Math.max(page, 1), totalPages);
-      setCurrentPage(safePage);
-    },
-    [totalPages]
-  );
+     const {
+    currentPage,
+    totalPages,
+    startIndex,
+    endIndex,
+    itemsOnCurrentPage,
+    nextPage,
+    prevPage,
+    setPage,
+    canNextPage,
+    canPrevPage,
+  } = usePagination({
+    totalItems,
+    itemsPerPage: 10,
+  });
 
-   const nextPage = useCallback(() => {
-    setPage(currentPage + 1);
-  }, [currentPage, setPage]);
+  const items = Array.from({ length: totalItems }, (_, i) => `Item ${i + 1}`);
+  const currentItems = items.slice(startIndex, endIndex + 1);
+
 
   return (
     <>
@@ -36,41 +34,47 @@ const setPage = useCallback(
         <div >
           <div>
             <label htmlFor="itemsPerPageSelect">Items per page: </label>
-            <select id="itemsPerPageSelect" className="border border-black">
+            <select value={itemsPerPage}
+            onChange={(e) => setItemsPerPage(Number(e.target.value))} className="border border-black">
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
             </select>
           </div>
-          <div >Total Items: 123</div>
+          <div >Total Items: {totalItems}</div>
         </div>
+
+        {/*render current /item  */}
         <ul >
-          <li className="border border-black p-2 m-2">Item 1</li>
-          <li className="border border-black p-2 m-2">Item 2</li>
-          <li className="border border-black p-2 m-2">Item 3</li>
-          <li className="border border-black p-2 m-2">Item 4</li>
-          <li className="border border-black p-2 m-2">Item 5</li>
-          <li className="border border-black p-2 m-2">Item 6</li>
-          <li className="border border-black p-2 m-2">Item 7</li>
-          <li className="border border-black p-2 m-2">Item 8</li>
-          <li className="border border-black p-2 m-2">Item 9</li>
-          <li className="border border-black p-2 m-2">Item 10</li>
+          {currentItems.map((item) => (
+          <li
+            key={item}
+            className="border border-black p-2 m-2"
+          >
+            {item}
+          </li>
+        ))}
         </ul>
+
         <div className="border border-black p-4 m-4">
-          <button disabled="" className="border border-black">
+          <button disabled={!canPrevPage}
+          onClick={prevPage}
+           className="border border-black">
             Previous
           </button>
+
           <span>
             Page{" "}
             <input
-              min="1"
-              max="13"
               type="number"
-              value="1"
+              min="1"
+              max={totalPages}
+              value={currentPage}
+              onChange={(e) => setPage(Number(e.target.value))}
               className="border border-black "
             />
-            of 13
+            {""} of {totalPages}
           </span>
           <button className="border border-black">Next</button>
         </div>
@@ -125,3 +129,5 @@ const setPage = useCallback(
     </>
   );
 }
+
+export default PaginationDemo;

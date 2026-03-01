@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-import { PaginationDemo } from './components/PaginationDemo'
+import PaginationDemo from './components/PaginationDemo'
 import { DebounceSearchDemo } from './components/DebounceSearchDemo'
 
 function App() {
@@ -18,4 +18,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
