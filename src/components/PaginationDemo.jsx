@@ -1,9 +1,11 @@
 import React from "react";
 import usePagination from "../hook/usePagination";
+import { useState } from "react";
 
 const  totalItems = 123
 
  function PaginationDemo() {
+  const [itemsPerPage, setItemsPerPage] =useState(10)
 
      const {
     currentPage,
@@ -76,54 +78,25 @@ const  totalItems = 123
             />
             {""} of {totalPages}
           </span>
-          <button className="border border-black">Next</button>
+
+          <button 
+          disabled = {!canNextPage}
+          onClick={nextPage}
+          className="border border-black">
+            Next
+            </button>
         </div>
+
         <div className="border border-black p-4 m-2">
-          Showing items 1 - 10 (Total on this page: 10)
-        </div>
-        <div className="margin-top: 10px; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
-          <button
-            disabled=""
-            className="border border-black "
-          >
-            1
-          </button>
-          <button className="border border-black ">
-            2
-          </button>
-          <button className="border border-black ">
-            3
-          </button>
-          <button className="border border-black ">
-            4
-          </button>
-          <button className="border border-black ">
-            5
-          </button>
-          <button className="border border-black ">
-            6
-          </button>
-          <button className="border border-black ">
-            7
-          </button>
-          <button className="border border-black ">
-            8
-          </button>
-          <button className="border border-black ">
-            9
-          </button>
-          <button className="border border-black ">
-            10
-          </button>
-          <button className="border border-black ">
-            11
-          </button>
-          <button className="border border-black ">
-            12
-          </button>
-          <button className="border border-black ">
-            13
-          </button>
+          {Array.from({length: totalPages}, (_, i) => (
+            <button 
+            key={i}
+            onClick={() => setPage(i+1)}
+            disabled ={currentPage === i+1}
+            >
+              {i+1}
+            </button>
+          ))}
         </div>
       </div>
     </>
