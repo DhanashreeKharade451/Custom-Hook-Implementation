@@ -8,7 +8,22 @@ export function PaginationDemo({
         return Math.max(1,Math.ceil(totalItems/itemsPerPage));
       },[totalItems, itemsPerPage]);
 
+     const [currentPage, setCurrentPage] = useState(
+    Math.min(Math.max(initialPage, 1), totalPages)
+  );
  
+const setPage = useCallback(
+    (page) => {
+      const safePage = Math.min(Math.max(page, 1), totalPages);
+      setCurrentPage(safePage);
+    },
+    [totalPages]
+  );
+
+   const nextPage = useCallback(() => {
+    setPage(currentPage + 1);
+  }, [currentPage, setPage]);
+
   return (
     <>
       <div className="bg-yellow-100 border border-black p-8 m-8">
