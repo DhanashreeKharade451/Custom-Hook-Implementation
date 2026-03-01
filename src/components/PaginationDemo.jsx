@@ -1,5 +1,14 @@
-export function PaginationDemo() {
-    
+export function PaginationDemo({
+  totalItems,
+ itemsPerPage = 10,
+ initialPage =1,
+    }) {
+
+      const totalPages = useMemo (() => {
+        return Math.max(1,Math.ceil(totalItems/itemsPerPage));
+      },[totalItems, itemsPerPage]);
+
+ 
   return (
     <>
       <div className="bg-yellow-100 border border-black p-8 m-8">
