@@ -1,3 +1,6 @@
+import React from "react";
+import usePagination from "../hook/usePagination";
+
 export function PaginationDemo({
   totalItems,
  itemsPerPage = 10,
