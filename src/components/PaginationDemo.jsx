@@ -2,7 +2,7 @@ export function PaginationDemo() {
     
   return (
     <>
-      <div className="border border-black p-8 m-8">
+      <div className="bg-yellow-100 border border-black p-8 m-8">
         <h3 className="m-4 text-3xl">
           Pagination Demo
         </h3>
