@@ -3,19 +3,26 @@ import useDebounce from "../hook/useDebounce";
 
 export function DebounceSearchDemo() {
     const [input, setInput] = useState("");
-  const [delay, setDelay] = useState("");
+  const [delay, setDelay] = useState(500);
    const [searchResult, setSearchResult] = useState("");
 
   //  // Debounced value after 500ms
-  const debouncedValue =useDebounce(input,500);
+  const debouncedValue =useDebounce(input,delay);
 
-   // Simulated API call after 1 second
+   // Simulated API call 500ms AFTER debounced value
 
    useEffect(() => {
     if(!debouncedValue){
-        setSearchResult
+        setSearchResult("");
+        return
     }
-   })
+const timer =setTimeout(() => {
+    searchResult(`Result for ${debouncedValue}`);
+    console.log("searching For:", debouncedValue);
+},1000);
+return () => clearTimeout(timer);
+
+   }, [debouncedValue]);
 
 //   useEffect(() =>{
 //     if(debouncedValue){
@@ -59,6 +66,7 @@ export function DebounceSearchDemo() {
 
   <div>
     <h4 className="font-semibold mb-1">Simulated Search Results:</h4>
+
     <p className="text-gray-600">{debouncedValue? `searching for "${debouncedValue}"` :"Type to see result"}</p>
   </div>
 </div>
