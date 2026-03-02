@@ -72,7 +72,7 @@ export function DebounceSearchDemo() {
       <div>
         <h4 className="font-semibold mb-1">Simulated Search Results:</h4>
         {searchResult.length === 0 ? (
-            <p>Type to see Result: </p>
+            <p className="text-gray-600">Type to see Result: </p>
         ):(<ul className="list-disc pl-5">
             {searchResult.map((item,index) => (<li key={index}>{item}</li>))}
         </ul>)}

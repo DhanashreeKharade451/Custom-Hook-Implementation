@@ -22,6 +22,7 @@ const  totalItems = 123
     totalItems,
     itemsPerPage: 10,
   });
+  
 
   const items = Array.from({ length: totalItems }, (_, i) => `Item ${i + 1}`);
   const currentItems = items.slice(startIndex, endIndex + 1);
