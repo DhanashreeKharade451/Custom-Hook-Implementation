@@ -1,6 +1,6 @@
 import React from "react";
 import usePagination from "../hook/usePagination";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const  totalItems = 123
 
@@ -22,7 +22,12 @@ const  totalItems = 123
     totalItems,
     itemsPerPage,
   });
+ 
   
+  useEffect(() => {
+    setPage(1);
+  }, [itemsPerPage]);
+
 
   const items = Array.from({ length: totalItems }, (_, i) => `Item ${i + 1}`);
   const currentItems = items.slice(startIndex, endIndex + 1);
@@ -30,8 +35,8 @@ const  totalItems = 123
 
   return (
     <>
-      <div className="bg-yellow-100 border border-black p-8 m-8">
-        <h3 className="m-4 text-3xl">
+      <div className="w-full  max-w-4xl bg-yellow-100 border  shadow-lg rounded-2xl p-6 border-black p-8 m-8">
+        <h3 className="m-4 text-3xl md:text-3xl font-bold text-center mb-6">
           Pagination Demo
         </h3>
         <div >
@@ -93,6 +98,7 @@ const  totalItems = 123
             <button 
             key={i}
             onClick={() => setPage(i+1)}
+            
             disabled ={currentPage === i+1}
             >
               {i+1}

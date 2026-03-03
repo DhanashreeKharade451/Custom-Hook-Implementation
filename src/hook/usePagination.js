@@ -1,23 +1,14 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 
-function usePagination( {
-    totalItems,
-  itemsPerPage ,
-  initialPage = 1,
-}){
-
-    const totalPages = useMemo(() => {
+function usePagination({ totalItems, itemsPerPage, initialPage = 1 }) {
+  const totalPages = useMemo(() => {
     return Math.max(1, Math.ceil(totalItems / itemsPerPage));
   }, [totalItems, itemsPerPage]);
 
- 
-
-useEffect(() => {
-  setPage(1);
-}, [itemsPerPage]);
+  
 
   const [currentPage, setCurrentPage] = useState(
-    Math.min(Math.max(initialPage, 1), totalPages)
+    Math.min(Math.max(initialPage, 1), totalPages),
   );
 
   const setPage = useCallback(
@@ -25,18 +16,18 @@ useEffect(() => {
       const safePage = Math.min(Math.max(page, 1), totalPages);
       setCurrentPage(safePage);
     },
-    [totalPages]
+    [totalPages],
   );
 
   const nextPage = useCallback(() => {
     setPage(currentPage + 1);
   }, [currentPage, setPage]);
 
-   const prevPage = useCallback(() => {
+  const prevPage = useCallback(() => {
     setPage(currentPage - 1);
   }, [currentPage, setPage]);
 
- const startIndex = useMemo(() => {
+  const startIndex = useMemo(() => {
     return (currentPage - 1) * itemsPerPage;
   }, [currentPage, itemsPerPage]);
 
@@ -44,7 +35,7 @@ useEffect(() => {
     return Math.min(startIndex + itemsPerPage - 1, totalItems - 1);
   }, [startIndex, itemsPerPage, totalItems]);
 
-   const itemsOnCurrentPage = useMemo(() => {
+  const itemsOnCurrentPage = useMemo(() => {
     if (totalItems === 0) return 0;
     return endIndex - startIndex + 1;
   }, [startIndex, endIndex, totalItems]);
@@ -52,9 +43,8 @@ useEffect(() => {
   const canNextPage = currentPage < totalPages;
   const canPrevPage = currentPage > 1;
 
-
-    return {
-         currentPage,
+  return {
+    currentPage,
     totalPages,
     startIndex,
     endIndex,
@@ -64,7 +54,6 @@ useEffect(() => {
     prevPage,
     canNextPage,
     canPrevPage,
-    };   
-    
-} 
+  };
+}
 export default usePagination;
