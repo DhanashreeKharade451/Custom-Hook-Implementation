@@ -20,7 +20,7 @@ const  totalItems = 123
     canPrevPage,
   } = usePagination({
     totalItems,
-    itemsPerPage: 10,
+    itemsPerPage,
   });
   
 

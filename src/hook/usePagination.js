@@ -1,14 +1,20 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 
 function usePagination( {
     totalItems,
-  itemsPerPage = 10,
+  itemsPerPage ,
   initialPage = 1,
 }){
 
     const totalPages = useMemo(() => {
     return Math.max(1, Math.ceil(totalItems / itemsPerPage));
   }, [totalItems, itemsPerPage]);
+
+ 
+
+useEffect(() => {
+  setPage(1);
+}, [itemsPerPage]);
 
   const [currentPage, setCurrentPage] = useState(
     Math.min(Math.max(initialPage, 1), totalPages)
